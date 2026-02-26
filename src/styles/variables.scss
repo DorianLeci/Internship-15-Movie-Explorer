@@ -5,4 +5,15 @@ $bg-primary: linear-gradient(
 );
 
 $font-primary: 'Poppins', sans-serif;
+
 $color-aqua: rgb(11, 219, 188);
+$color-peach: #ffb3b3;
+$card-bg: linear-gradient(
+  180deg,
+  rgba(76, 34, 143, 1) 0%,
+  rgba(113, 65, 196, 1) 100%
+);
+
+$text-shadow-black: 4px 0px 4px black;
+$card-shadow: 8px 8px 3px rgba(255, 179, 179, 0.5);
+$card-hover-shadow: 8px 8px 3px rgba(255, 179, 179, 0.7);

@@ -1,4 +1,57 @@
 @use '../../styles/variables.scss' as vars;
 
 .card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 400px;
+  padding: 20px 0px;
+  background: vars.$card-bg;
+  border-radius: 12px;
+  box-shadow: vars.$card-shadow;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: vars.$card-hover-shadow;
+  }
+}
+
+.title {
+  color: white;
+  text-shadow: vars.$text-shadow-black;
+  font-size: 32px;
+  font-weight: 600;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.poster {
+  width: 400px;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 10px;
+
+  p {
+    color: vars.$color-peach;
+    text-shadow: vars.$text-shadow-black;
+    font-size: 20px;
+    margin: 0;
+    text-align: center;
+  }
+
+  .rating {
+    font-weight: 600;
+  }
 }
