@@ -1,7 +1,7 @@
 import styles from './ErrorCard.module.scss';
 
 interface ErrorCardProps {
-  message: string;
+  message: string | null;
   onRetry: () => void;
 }
 

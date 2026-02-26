@@ -9,7 +9,7 @@ interface FetchState<T> {
 
 export function useFetch<T>(url: string): FetchState<T> {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
 
@@ -23,7 +23,8 @@ export function useFetch<T>(url: string): FetchState<T> {
     const fetchData = async () => {
       try {
         setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        setError(null);
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok)
@@ -32,11 +33,11 @@ export function useFetch<T>(url: string): FetchState<T> {
         const result = await response.json();
 
         setData(result);
-        setError(null);
       } catch (err) {
-        if (err instanceof Error && err.name !== 'AbortError')
+        if (err instanceof Error) {
+          if (err.name === 'AbortError') return;
           setError(err.message);
-        else setError('An error occurred');
+        } else setError('An error occurred');
       } finally {
         setLoading(false);
       }
