@@ -1,6 +1,14 @@
 import { useFetch } from './useFetch';
 
-export function usePaginatedFetch<T>(url: string, skip: boolean) {
+interface PaginatedFetchOptions {
+  url: string;
+  skip: boolean;
+}
+
+export function usePaginatedFetch<T>({
+  url,
+  skip = false,
+}: PaginatedFetchOptions) {
   const fetchUrl = skip ? '' : url;
 
   const { data, loading, error, refetch } = useFetch<T>(fetchUrl);

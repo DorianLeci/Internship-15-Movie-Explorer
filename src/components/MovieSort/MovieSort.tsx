@@ -12,6 +12,7 @@ export const MovieSort = () => {
       <select
         value={sortBy}
         onChange={(e) => setSortBy(e.target.value as MovieSortBy)}
+        disabled={!!filters.query}
       >
         <option value={MovieSortBy.POPULARITY}>Popularity</option>
         <option value={MovieSortBy.RATING}>Rating</option>
@@ -25,6 +26,7 @@ export const MovieSort = () => {
             ? setSortDirection(MovieSortDirection.DESC)
             : setSortDirection(MovieSortDirection.ASC)
         }
+        disabled={!!filters.query}
       >
         {sortDirection}
       </button>
