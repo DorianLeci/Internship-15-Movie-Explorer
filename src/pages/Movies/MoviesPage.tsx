@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { useMovies } from '../../hooks/useMovies';
 import style from './MoviesPage.module.scss';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
 
 export const MoviesPage = () => {
   const { browse, search, searchQuery } = useMovies();
@@ -18,8 +19,6 @@ export const MoviesPage = () => {
   const refetch = activeState.refetch;
   const loadMore = activeState.loadMore;
 
-  console.log('Loading:', loading);
-
   useInfiniteScroll({
     containerRef,
     callback: () => loadMore(),
@@ -28,6 +27,7 @@ export const MoviesPage = () => {
 
   return (
     <div className={style.container} ref={containerRef}>
+      <MovieSearch />
       {loading && <Spinner />}
       {error && <ErrorCard message={error} onRetry={refetch} />}
       {moviesToRender.map((movie) => (

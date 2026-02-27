@@ -1,5 +1,4 @@
 import type { Movie } from './movies';
-import type { MoviesResponse } from '../../types/movies';
 
 export interface MoviesState {
   movies: Movie[];
@@ -19,4 +18,5 @@ export interface MovieContextType {
   browse: FetchState;
   search: FetchState;
   searchQuery: string;
+  setSearchQuery: (query: string) => void;
 }

@@ -24,7 +24,7 @@ export function useFetch<T>(url: string): FetchState<T> {
       try {
         setLoading(true);
         setError(null);
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        // await new Promise((resolve) => setTimeout(resolve, 200));
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok)

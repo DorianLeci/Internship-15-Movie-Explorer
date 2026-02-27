@@ -4,6 +4,7 @@ import type { MoviesResponse } from '../types/movies';
 import { usePaginatedFetch } from '../hooks/usePaginatedFetch';
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
+import { useFetchedData } from '../hooks/useFetchedData';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -29,7 +30,6 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
   const debouncedQuery = useDebounce(searchQuery, 500);
 
   const canLoadBrowse = browseState.page <= browseState.totalPageNum;
-
   const {
     data: browseData,
     loading: browseLoading,
@@ -53,35 +53,13 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
     !canLoadSearch,
   );
 
-  useEffect(() => {
-    if (!browseData?.results) return;
+  useFetchedData({ data: browseData, callback: setBrowseState });
+  useFetchedData({ data: searchData, callback: setSearchState });
 
-    setBrowseState((prev: MoviesState) => {
-      const existingIds = new Set(prev.movies.map((movie) => movie.id));
-
-      const newMovies = browseData.results.filter(
-        (movie) => !existingIds.has(movie.id),
-      );
-
-      return {
-        ...prev,
-        movies: [...prev.movies, ...newMovies],
-        totalPageNum: browseData.total_pages,
-      };
-    });
-  }, [browseData]);
-
-  useEffect(() => {
-    if (!searchData?.results) return;
-
-    setSearchState((prev: MoviesState) => {
-      return {
-        ...prev,
-        movies: [...searchData.results],
-        totalPageNum: searchData.total_pages,
-      };
-    });
-  }, [searchData]);
+  const handleSearchQuery = (query: string) => {
+    setSearchQuery(query);
+    setSearchState(initialState);
+  };
 
   return (
     <MovieContext.Provider
@@ -107,6 +85,7 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
             setSearchState((prev) => ({ ...prev, page: prev.page + 1 })),
         },
         searchQuery,
+        setSearchQuery: handleSearchQuery,
       }}
     >
       {children}
