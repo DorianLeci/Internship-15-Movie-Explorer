@@ -92,9 +92,5 @@ container {
 }
 
 .main {
-  background: linear-gradient(
-    180deg,
-    rgba(31, 31, 46, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: vars.$bg-dark;
 }

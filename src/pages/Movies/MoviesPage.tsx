@@ -6,9 +6,10 @@ import { useMovies } from '../../hooks/useMovies';
 import style from './MoviesPage.module.scss';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
+import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
 
 export const MoviesPage = () => {
-  const { browse, search, searchQuery } = useMovies();
+  const { browse, search, searchQuery, debouncedQuery } = useMovies();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const activeState = searchQuery ? search : browse;
@@ -26,13 +27,22 @@ export const MoviesPage = () => {
   });
 
   return (
-    <div className={style.container} ref={containerRef}>
-      <MovieSearch />
-      {loading && <Spinner />}
-      {error && <ErrorCard message={error} onRetry={refetch} />}
-      {moviesToRender.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
+    <div className={style.wrapper}>
+      <div className={style.searchWrapper}>
+        <MovieSearch />
+      </div>
+
+      <div className={style.container} ref={containerRef}>
+        {loading && <Spinner />}
+        {error && <ErrorCard message={error} onRetry={refetch} />}
+        {moviesToRender.length === 0 &&
+          !loading &&
+          !error &&
+          debouncedQuery && <EmptyStateCard />}
+        {moviesToRender.map((movie) => (
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
     </div>
   );
 };

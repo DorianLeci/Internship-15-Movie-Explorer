@@ -36,13 +36,12 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
     error: browseError,
     refetch: browseRefetch,
   } = usePaginatedFetch<MoviesResponse>(
-    `${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${browseState.page}`,
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&page=${browseState.page}`,
     !canLoadBrowse,
   );
 
   const canLoadSearch =
     debouncedQuery && searchState.page <= searchState.totalPageNum;
-
   const {
     data: searchData,
     loading: searchLoading,
@@ -53,13 +52,12 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
     !canLoadSearch,
   );
 
+  useEffect(() => {
+    setSearchState(initialState);
+  }, [debouncedQuery]);
+
   useFetchedData({ data: browseData, callback: setBrowseState });
   useFetchedData({ data: searchData, callback: setSearchState });
-
-  const handleSearchQuery = (query: string) => {
-    setSearchQuery(query);
-    setSearchState(initialState);
-  };
 
   return (
     <MovieContext.Provider
@@ -85,7 +83,8 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
             setSearchState((prev) => ({ ...prev, page: prev.page + 1 })),
         },
         searchQuery,
-        setSearchQuery: handleSearchQuery,
+        setSearchQuery: setSearchQuery,
+        debouncedQuery,
       }}
     >
       {children}

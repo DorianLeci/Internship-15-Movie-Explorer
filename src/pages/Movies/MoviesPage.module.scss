@@ -1,5 +1,27 @@
 @use '../../styles/variables.scss' as vars;
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.searchWrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin: 10px 40px 0px;
+  padding: 20px;
+  box-shadow: 0px 2px 10px vars.$color-peach;
+  border-radius: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(31, 31, 46, 0.8) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  backdrop-filter: blur(10px);
+}
+
 .container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

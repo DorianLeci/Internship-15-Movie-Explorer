@@ -9,13 +9,12 @@ export const MovieSearch = () => {
   };
 
   return (
-    <div className={style.container}>
-      <input
-        type="text"
-        placeholder="Search movies"
-        value={searchQuery}
-        onChange={handleChange}
-      ></input>
-    </div>
+    <input
+      type="text"
+      placeholder="Search movies"
+      value={searchQuery}
+      onChange={handleChange}
+      className={style.input}
+    ></input>
   );
 };

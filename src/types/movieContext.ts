@@ -18,5 +18,6 @@ export interface MovieContextType {
   browse: FetchState;
   search: FetchState;
   searchQuery: string;
+  debouncedQuery: string;
   setSearchQuery: (query: string) => void;
 }
