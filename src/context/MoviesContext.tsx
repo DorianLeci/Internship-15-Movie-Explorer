@@ -5,6 +5,8 @@ import { usePaginatedFetch } from '../hooks/usePaginatedFetch';
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import { useFetchedData } from '../hooks/useFetchedData';
+import { MovieSortBy } from '../enums/MovieSortBy';
+import { MovieSortDirection } from '../enums/MovieSortDirection';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -27,6 +29,12 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
   const [browseState, setBrowseState] = useState<MoviesState>(initialState);
   const [searchState, setSearchState] = useState<MoviesState>(initialState);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const [sortBy, setSortBy] = useState<MovieSortBy>(MovieSortBy.POPULARITY);
+  const [sortDirection, setSortDirection] = useState<MovieSortDirection>(
+    MovieSortDirection.DESC,
+  );
+
   const debouncedQuery = useDebounce(searchQuery, 500);
 
   const canLoadBrowse = browseState.page <= browseState.totalPageNum;
@@ -36,7 +44,7 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
     error: browseError,
     refetch: browseRefetch,
   } = usePaginatedFetch<MoviesResponse>(
-    `${BASE_URL}/discover/movie?api_key=${API_KEY}&page=${browseState.page}`,
+    `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortBy}.${sortDirection}&page=${browseState.page}&vote_average.gte=5&vote_count.gte=1000`,
     !canLoadBrowse,
   );
 
@@ -53,8 +61,13 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
   );
 
   useEffect(() => {
-    setSearchState(initialState);
-  }, [debouncedQuery]);
+    setBrowseState(initialState);
+  }, [sortBy, sortDirection]);
+
+  useEffect(() => {
+    if (!debouncedQuery) setSearchState(browseState);
+    else setSearchState(initialState);
+  }, [debouncedQuery, browseState]);
 
   useFetchedData({ data: browseData, callback: setBrowseState });
   useFetchedData({ data: searchData, callback: setSearchState });
@@ -82,9 +95,14 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
           loadMore: () =>
             setSearchState((prev) => ({ ...prev, page: prev.page + 1 })),
         },
-        searchQuery,
-        setSearchQuery: setSearchQuery,
-        debouncedQuery,
+        filters: {
+          query: searchQuery,
+          setQuery: setSearchQuery,
+          sortBy,
+          setSortBy,
+          sortDirection,
+          setSortDirection,
+        },
       }}
     >
       {children}

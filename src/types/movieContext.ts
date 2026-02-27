@@ -1,3 +1,6 @@
+import type { Dispatch, SetStateAction } from 'react';
+import type { MovieSortBy } from '../enums/MovieSortBy';
+import type { MovieSortDirection } from '../enums/MovieSortDirection';
 import type { Movie } from './movies';
 
 export interface MoviesState {
@@ -14,10 +17,17 @@ interface FetchState {
   loadMore: () => void;
 }
 
+interface FiltersState {
+  query: string;
+  setQuery: (query: string) => void;
+  sortBy: MovieSortBy;
+  setSortBy: Dispatch<SetStateAction<MovieSortBy>>;
+  sortDirection: MovieSortDirection;
+  setSortDirection: Dispatch<SetStateAction<MovieSortDirection>>;
+}
+
 export interface MovieContextType {
   browse: FetchState;
   search: FetchState;
-  searchQuery: string;
-  debouncedQuery: string;
-  setSearchQuery: (query: string) => void;
+  filters: FiltersState;
 }

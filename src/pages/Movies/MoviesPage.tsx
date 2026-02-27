@@ -7,12 +7,13 @@ import style from './MoviesPage.module.scss';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
 import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
+import { MovieSort } from '../../components/MovieSort/MovieSort';
 
 export const MoviesPage = () => {
-  const { browse, search, searchQuery, debouncedQuery } = useMovies();
+  const { browse, search, filters } = useMovies();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
-  const activeState = searchQuery ? search : browse;
+  const activeState = filters.query ? search : browse;
 
   const moviesToRender = activeState.moviesState.movies;
   const loading = activeState.loading;
@@ -28,17 +29,17 @@ export const MoviesPage = () => {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.searchWrapper}>
+      <div className={style.filterWrapper}>
         <MovieSearch />
+        <MovieSort />
       </div>
 
       <div className={style.container} ref={containerRef}>
         {loading && <Spinner />}
         {error && <ErrorCard message={error} onRetry={refetch} />}
-        {moviesToRender.length === 0 &&
-          !loading &&
-          !error &&
-          debouncedQuery && <EmptyStateCard />}
+        {!loading && !error && moviesToRender.length === 0 && (
+          <EmptyStateCard />
+        )}
         {moviesToRender.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
