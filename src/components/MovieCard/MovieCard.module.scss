@@ -7,7 +7,7 @@
   justify-content: center;
   gap: 20px;
   max-width: 400px;
-  padding: 20px 0px;
+  padding: 10px 0px 20px;
   background: vars.$card-bg;
   border-radius: 12px;
   box-shadow: vars.$card-shadow;
@@ -24,6 +24,7 @@
 .title {
   color: white;
   text-shadow: vars.$text-shadow-black;
+  text-align: center;
   font-size: 32px;
   font-weight: 600;
   overflow-wrap: break-word;
