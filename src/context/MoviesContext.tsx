@@ -1,20 +1,16 @@
 import type { MovieContextType } from '../types/MovieContextType';
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, type ReactNode } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import { MovieSortBy } from '../enums/MovieSortBy';
 import { MovieSortDirection } from '../enums/MovieSortDirection';
 import { useBrowseMovies } from '../hooks/useBrowseMovies';
 import { useSearchMovies } from '../hooks/useSearchMovies';
 
-interface MoviesProviderProps {
-  children: React.ReactNode;
-}
-
 export const MovieContext = createContext<MovieContextType | undefined>(
   undefined,
 );
 
-export const MovieProvider = ({ children }: MoviesProviderProps) => {
+export const MovieProvider = ({ children }: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 500);
 

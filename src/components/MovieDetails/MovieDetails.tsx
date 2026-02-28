@@ -6,9 +6,14 @@ import { Spinner } from '../Spinner/Spinner';
 import type { MovieDetails } from '../../types/MovieDetails';
 import styles from './MoveDetails.module.scss';
 import { CrewJob } from '../../enums/CrewJob';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useFavorites } from '../../hooks/useFavorites';
 
 export default function MovieDetailsPage() {
   const { id } = useParams<{ id: string }>();
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  if (!id) return <div>Invalid movie ID</div>;
 
   const params = {
     api_key: API_KEY,
@@ -19,8 +24,8 @@ export default function MovieDetailsPage() {
 
   const { data, loading, error, refetch } = useFetch<MovieDetails>(url);
 
-  if (error) return <ErrorCard message={error} onRetry={refetch} />;
   if (!data) return <div>Not found</div>;
+  if (error) return <ErrorCard message={error} onRetry={refetch} />;
 
   const { title, overview, runtime, genres, credits, reviews, videos } =
     data as MovieDetails;
@@ -36,7 +41,7 @@ export default function MovieDetailsPage() {
 
   const reviewList = reviews?.results.slice(0, 3);
 
-  console.log('data: ', data);
+  console.log(isFavorite(id));
   return (
     <div className={styles.container}>
       <Spinner
@@ -45,6 +50,15 @@ export default function MovieDetailsPage() {
         minDisplayTime={300}
       />
 
+      <section className={styles.action}>
+        <button type="button" onClick={() => window.history.back()}>
+          <FaArrowLeft size={20} />
+        </button>
+
+        <button onClick={() => toggleFavorite(id)}>
+          {isFavorite(id) ? 'Remove' : 'Add'}
+        </button>
+      </section>
       <section className={styles.info}>
         <h1>{title}</h1>
         <p>{overview}</p>

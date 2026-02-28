@@ -5,18 +5,34 @@ import { AppPaths } from './routes/paths';
 import { MoviesPage } from './pages/Movies/MoviesPage';
 import { MovieProvider } from './context/MoviesContext';
 import MovieDetailsPage from './components/MovieDetails/MovieDetails';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 function App() {
   return (
-    <MovieProvider>
-      <Layout>
-        <Routes>
-          <Route path={AppPaths.HOME} element={<HomePage />} />
-          <Route path={AppPaths.MOVIES} element={<MoviesPage />} />
-          <Route path={AppPaths.MOVIE_DETAIL} element={<MovieDetailsPage />} />
-        </Routes>
-      </Layout>
-    </MovieProvider>
+    <Layout>
+      <Routes>
+        <Route path={AppPaths.HOME} element={<HomePage />} />
+
+        <Route
+          path={AppPaths.MOVIES}
+          element={
+            <MovieProvider>
+              <MoviesPage />
+            </MovieProvider>
+          }
+        />
+
+        <Route
+          path={AppPaths.MOVIE_DETAIL}
+          element={
+            <FavoritesProvider>
+              <MovieDetailsPage />
+            </FavoritesProvider>
+          }
+        />
+      </Routes>
+    </Layout>
   );
 }
+
 export default App;
