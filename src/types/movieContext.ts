@@ -19,6 +19,7 @@ interface FetchState {
 
 interface FiltersState {
   query: string;
+  debouncedQuery: string;
   setQuery: (query: string) => void;
   sortBy: MovieSortBy;
   setSortBy: Dispatch<SetStateAction<MovieSortBy>>;

@@ -1,10 +1,30 @@
+import { useEffect, useState } from 'react';
 import style from './Spinner.module.scss';
 
-export const Spinner = () => {
+interface SpinnerProps {
+  loading: boolean;
+  text: string;
+  minDisplayTime: number;
+}
+
+export const Spinner = ({ loading, text, minDisplayTime }: SpinnerProps) => {
+  const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: number | undefined;
+
+    if (loading) setShow(true);
+    else timeoutId = setTimeout(() => setShow(false), minDisplayTime);
+
+    return () => clearTimeout(timeoutId);
+  }, [loading, minDisplayTime]);
+
+  if (!show) return null;
+
   return (
     <div className={style.container}>
       <div className={style.spinner}></div>
-      <span className={style.loadingText}>Loading popular movies...</span>
+      <span className={style.loadingText}>{text}</span>
     </div>
   );
 };

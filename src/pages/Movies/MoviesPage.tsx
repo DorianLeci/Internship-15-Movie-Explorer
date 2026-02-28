@@ -35,10 +35,14 @@ export const MoviesPage = () => {
       </div>
 
       <div className={style.container} ref={containerRef}>
-        {loading && <Spinner />}
+        <Spinner
+          text={'Loading popular movies...'}
+          loading={loading}
+          minDisplayTime={300}
+        />
         {error && <ErrorCard message={error} onRetry={refetch} />}
         {!loading && !error && moviesToRender.length === 0 && (
-          <EmptyStateCard />
+          <EmptyStateCard query={filters.debouncedQuery} />
         )}
         {moviesToRender.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />

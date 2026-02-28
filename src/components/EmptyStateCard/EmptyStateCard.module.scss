@@ -1,7 +1,27 @@
 .wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  min-height: 100vh;
   color: white;
-  font-size: 32px;
+}
+
+.title {
+  margin-bottom: 16px;
+  font-size: 48px;
+  letter-spacing: 0.5px;
+
+  span {
+    color: red;
+  }
+}
+
+.subtitle {
+  font-size: 24px;
+}
+.icon {
+  font-size: 120px;
+  opacity: 0.8;
 }

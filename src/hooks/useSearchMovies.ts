@@ -1,11 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { MoviesState } from '../types/movieContext';
 import type { MoviesResponse } from '../types/movies';
-import { usePaginatedFetch } from './usePaginatedFetch';
 import { useFetchedData } from './useFetchedData';
-import type { MovieSortBy } from '../enums/MovieSortBy';
-import type { MovieSortDirection } from '../enums/MovieSortDirection';
 import { filterSearchResults } from '../helpers/FilterSearch';
+import { useFetchAllPages } from './useFetchAllPages';
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
@@ -19,23 +17,22 @@ const initialState: MoviesState = {
 interface UseSearchOptions {
   query: string;
   browseState: MoviesState;
-  minVoteCount: number;
-  minVoteAverage: number;
+  minVoteCount?: number;
+  minVoteAverage?: number;
+  topResultsCount?: number;
 }
 
 export function useSearchMovies({
   query,
   browseState,
-  minVoteAverage,
-  minVoteCount,
+  minVoteAverage = 5,
+  minVoteCount = 1000,
+  topResultsCount = 30,
 }: UseSearchOptions) {
   const [searchState, setSearchState] = useState<MoviesState>(initialState);
 
-  const canLoad = query && searchState.page <= searchState.totalPageNum;
-
-  const { data, loading, error, refetch } = usePaginatedFetch<MoviesResponse>({
-    url: `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&page=${searchState.page}`,
-    skip: !canLoad,
+  const { data, loading, error, refetch } = useFetchAllPages<MoviesResponse>({
+    url: `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`,
   });
 
   useEffect(() => {
@@ -45,11 +42,13 @@ export function useSearchMovies({
 
   const filteredData = useMemo(() => {
     if (!data) return null;
+    const allMovies = data.flatMap((page) => page.results);
 
     return filterSearchResults({
-      data,
+      data: { results: allMovies, refetch, total_pages: 1 },
       minVoteCount,
       minVoteAverage,
+      topResultsCount,
     });
   }, [data]);
 
@@ -60,12 +59,6 @@ export function useSearchMovies({
     loading,
     error,
     refetch,
-    loadMore: () => {
-      if (filteredData?.results.length === 0) return;
-      setSearchState((prev) => ({
-        ...prev,
-        page: prev.page + 1,
-      }));
-    },
+    loadMore: () => {},
   };
 }

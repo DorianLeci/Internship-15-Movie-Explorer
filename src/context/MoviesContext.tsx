@@ -28,8 +28,6 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
   const search = useSearchMovies({
     query: debouncedQuery,
     browseState: browse.moviesState,
-    minVoteAverage: 5,
-    minVoteCount: 100,
   });
 
   return (
@@ -39,6 +37,7 @@ export const MovieProvider = ({ children }: MoviesProviderProps) => {
         search,
         filters: {
           query: searchQuery,
+          debouncedQuery,
           setQuery: setSearchQuery,
           sortBy,
           setSortBy,

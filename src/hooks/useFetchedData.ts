@@ -23,6 +23,7 @@ export function useFetchedData({ data, callback }: UseFetchedDataOptions) {
       const newMovies = data.results.filter(
         (movie) => !existingIds.has(movie.id),
       );
+
       return {
         ...prev,
         movies: [...prev.movies, ...newMovies],
