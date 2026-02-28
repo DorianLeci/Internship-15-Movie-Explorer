@@ -1,16 +1,17 @@
 import styles from './MovieCard.module.scss';
-import type { Movie } from '../../types/movies';
+import type { Movie } from '../../types/MovieResponse';
 import defaultPoster from '../../assets/images/default-poster.png';
 
 interface MovieCardProps {
   movie: Movie;
+  onClick: () => void;
 }
 
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
-export const MovieCard = ({ movie }: MovieCardProps) => {
+export const MovieCard = ({ movie, onClick }: MovieCardProps) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div className={styles.favoriteBtn}></div>
       <h1 className={styles.title}>{movie.title}</h1>
       <img

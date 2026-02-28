@@ -8,8 +8,10 @@ import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
 import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
 import { MovieSort } from '../../components/MovieSort/MovieSort';
+import { useNavigate } from 'react-router-dom';
 
 export const MoviesPage = () => {
+  const navigate = useNavigate();
   const { browse, search, filters } = useMovies();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +47,11 @@ export const MoviesPage = () => {
           <EmptyStateCard query={filters.debouncedQuery} />
         )}
         {moviesToRender.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onClick={() => navigate(`/movies/${movie.id}`)}
+          />
         ))}
       </div>
     </div>

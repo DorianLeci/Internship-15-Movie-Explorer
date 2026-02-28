@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import type { MoviesState } from '../types/movieContext';
-import type { MoviesResponse } from '../types/movies';
+import type { MoviesState } from '../types/MovieContextType';
+import type { MoviesResponse } from '../types/MovieResponse';
 import { usePaginatedFetch } from './usePaginatedFetch';
 import { useFetchedData } from './useFetchedData';
 import type { MovieSortBy } from '../enums/MovieSortBy';
 import type { MovieSortDirection } from '../enums/MovieSortDirection';
-
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const BASE_URL = 'https://api.themoviedb.org/3';
+import { API_KEY, BASE_URL } from '../api/config';
 
 const initialState: MoviesState = {
   movies: [],

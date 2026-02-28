@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface FetchState<T> {
   data: T | null;
@@ -12,8 +12,6 @@ export function useFetch<T>(url: string): FetchState<T> {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
-
-  const refetch = () => setReload((prev) => prev + 1);
 
   useEffect(() => {
     if (!url) return;
@@ -48,5 +46,10 @@ export function useFetch<T>(url: string): FetchState<T> {
     return () => controller.abort();
   }, [url, reload]);
 
-  return { data, loading, error, refetch } as FetchState<T>;
+  return {
+    data,
+    loading,
+    error,
+    refetch: () => setReload((prev) => prev + 1),
+  } as FetchState<T>;
 }

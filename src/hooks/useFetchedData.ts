@@ -1,6 +1,6 @@
 import { useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
-import type { MoviesResponse } from '../types/movies';
-import type { MoviesState } from '../types/movieContext';
+import type { MoviesResponse } from '../types/MovieResponse';
+import type { MoviesState } from '../types/MovieContextType';
 
 interface UseFetchedDataOptions {
   data: MoviesResponse | null | undefined;

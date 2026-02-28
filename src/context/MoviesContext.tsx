@@ -1,5 +1,4 @@
-import type { MovieContextType } from '../types/movieContext';
-import type { MoviesState } from '../types/movieContext';
+import type { MovieContextType } from '../types/MovieContextType';
 import { createContext, useState, useEffect } from 'react';
 import { useDebounce } from '../hooks/useDebounce';
 import { MovieSortBy } from '../enums/MovieSortBy';

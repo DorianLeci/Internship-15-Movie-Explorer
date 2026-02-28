@@ -1,4 +1,4 @@
-import type { Movie, MoviesResponse } from '../types/movies';
+import type { Movie, MoviesResponse } from '../types/MovieResponse';
 
 interface FilterOptions {
   data: MoviesResponse | null;

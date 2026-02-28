@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import type { MovieSortBy } from '../enums/MovieSortBy';
 import type { MovieSortDirection } from '../enums/MovieSortDirection';
-import type { Movie } from './movies';
+import type { Movie } from './Movie';
 
 export interface MoviesState {
   movies: Movie[];
