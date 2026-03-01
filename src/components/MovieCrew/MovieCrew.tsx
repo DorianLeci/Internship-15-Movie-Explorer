@@ -7,13 +7,11 @@ interface MovieCrewProps {
 }
 
 export const MovieCrew = ({ crew }: MovieCrewProps) => {
-  if (!crew || crew.length === 0) return null;
-
-  const filteredCrew = crew.filter((member) =>
+  const filteredCrew = crew?.filter((member) =>
     Object.values(CrewJob).includes(member.job as CrewJob),
   );
 
-  if (filteredCrew.length === 0) return null;
+  if (!filteredCrew?.length) return null;
 
   return (
     <section className={styles.crewContainer}>

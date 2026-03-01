@@ -9,31 +9,31 @@ import { MovieDetailsPage } from './pages/MovieDetails/MovieDetailsPage';
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path={AppPaths.HOME} element={<HomePage />} />
+    <MovieProvider>
+      <Layout>
+        <Routes>
+          <Route path={AppPaths.HOME} element={<HomePage />} />
 
-        <Route
-          path={AppPaths.MOVIES}
-          element={
-            <MovieProvider>
+          <Route
+            path={AppPaths.MOVIES}
+            element={
               <FavoritesProvider>
                 <MoviesPage />
               </FavoritesProvider>
-            </MovieProvider>
-          }
-        />
+            }
+          />
 
-        <Route
-          path={AppPaths.MOVIE_DETAIL}
-          element={
-            <FavoritesProvider>
-              <MovieDetailsPage />
-            </FavoritesProvider>
-          }
-        />
-      </Routes>
-    </Layout>
+          <Route
+            path={AppPaths.MOVIE_DETAIL}
+            element={
+              <FavoritesProvider>
+                <MovieDetailsPage />
+              </FavoritesProvider>
+            }
+          />
+        </Routes>
+      </Layout>
+    </MovieProvider>
   );
 }
 

@@ -7,7 +7,7 @@ interface MovieCastProps {
 }
 
 export const MovieCast = ({ cast, limit = 5 }: MovieCastProps) => {
-  if (!cast || cast.length === 0) return null;
+  if (!cast?.length) return null;
 
   return (
     <section className={styles.castContainer}>

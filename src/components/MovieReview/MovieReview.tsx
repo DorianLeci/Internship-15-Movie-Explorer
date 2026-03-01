@@ -7,7 +7,7 @@ interface MovieReviewProps {
 }
 
 export const MovieReviews = ({ reviews, limit = 10 }: MovieReviewProps) => {
-  if (!reviews || reviews.length === 0) return null;
+  if (!reviews?.length) return null;
 
   return (
     <section className={styles.reviewContainer}>
