@@ -1,6 +1,7 @@
 import { createContext, useCallback, type ReactNode } from 'react';
 import type { FavoritesContextType } from '../types/FavoritesContextType';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { useFavoriteMovies } from '../hooks/useFavoriteMovies';
 
 const STORAGE_KEY = 'favorites';
 
@@ -9,38 +10,53 @@ export const FavoritesContext = createContext<FavoritesContextType | undefined>(
 );
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [favorites, setFavorites] = useLocalStorage<string[]>({
+  const [favoriteIds, setFavoriteIds] = useLocalStorage<string[]>({
     key: STORAGE_KEY,
     initialValue: [],
   });
 
+  const {
+    data: favoriteMovies,
+    loading,
+    error,
+    refetch,
+  } = useFavoriteMovies({ ids: favoriteIds });
+
   const addFavorite = (id: string) => {
-    if (favorites.includes(id)) return;
-    setFavorites([...favorites, id]);
+    if (favoriteIds.includes(id)) return;
+    setFavoriteIds([...favoriteIds, id]);
   };
 
   const removeFavorite = (id: string) => {
-    if (!favorites.includes(id)) return;
-    setFavorites(favorites.filter((favId) => favId != id));
+    if (!favoriteIds.includes(id)) return;
+    setFavoriteIds(favoriteIds.filter((favId) => favId != id));
   };
 
   const isFavorite = useCallback(
     (id: string) => {
-      return favorites.includes(id);
+      return favoriteIds.includes(id);
     },
-    [favorites],
+    [favoriteIds],
   );
 
   const toggleFavorite = useCallback(
     (id: string) => {
       isFavorite(id) ? removeFavorite(id) : addFavorite(id);
     },
-    [favorites, setFavorites],
+    [favoriteIds, setFavoriteIds],
   );
 
   return (
     <FavoritesContext.Provider
-      value={{ favorites, toggleFavorite, isFavorite }}
+      value={{
+        favoriteIds,
+        favoriteMovies,
+        toggleFavorite,
+        isFavorite,
+        loading,
+        error,
+        refetch,
+      }}
     >
       {children}
     </FavoritesContext.Provider>

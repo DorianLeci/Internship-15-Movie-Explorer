@@ -1,23 +1,22 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { API_KEY, BASE_URL } from '../../api/config';
 import { useFetch } from '../../hooks/useFetch';
 import type { MovieDetails } from '../../types/MovieDetails';
 import styles from './MoveDetailsPage.module.scss';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useFavorites } from '../../hooks/useFavorites';
-import { ErrorCard } from '../../components/ErrorCard/ErrorCard';
 import { Spinner } from '../../components/Spinner/Spinner';
-import { NotFound } from '../../components/NotFound/NotFound';
 import { MovieCast } from '../../components/MovieCast/MovieCast';
 import { MovieCrew } from '../../components/MovieCrew/MovieCrew';
 import { MovieReviews } from '../../components/MovieReview/MovieReview';
 import { MovieTrailer } from '../../components/MovieTrailer/MovieTrailer';
+import { useEffect } from 'react';
+import { AppPaths } from '../../routes/paths';
 
 export const MovieDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { toggleFavorite, isFavorite } = useFavorites();
-
-  if (!id) return <NotFound />;
 
   const params = {
     api_key: API_KEY,
@@ -26,7 +25,13 @@ export const MovieDetailsPage = () => {
 
   const url = `${BASE_URL}/movie/${id}?${new URLSearchParams(params)}`;
 
-  const { data, loading, error, refetch } = useFetch<MovieDetails>(url);
+  const { data, loading, error } = useFetch<MovieDetails>(url);
+
+  useEffect(() => {
+    if (error || !id) {
+      navigate(AppPaths.NOT_FOUND, { replace: true });
+    }
+  }, [error, id]);
 
   return (
     <div className={styles.container}>
@@ -36,8 +41,6 @@ export const MovieDetailsPage = () => {
         minDisplayTime={300}
       />
 
-      {!data && !loading && !error && <NotFound />}
-      {error && <ErrorCard message={error} onRetry={refetch} />}
       {data ? (
         <>
           <section className={styles.action}>

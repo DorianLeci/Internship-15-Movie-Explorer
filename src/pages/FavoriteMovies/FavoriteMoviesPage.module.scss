@@ -1,0 +1,16 @@
+@use '../../styles/variables.scss' as vars;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  row-gap: 100px;
+  height: 100vh;
+  padding: 80px 30px;
+  overflow-y: auto;
+}

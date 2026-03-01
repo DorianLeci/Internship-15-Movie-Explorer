@@ -3,7 +3,7 @@ import { MovieCard } from '../../components/MovieCard/MovieCard';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { useRef } from 'react';
 import { useMovies } from '../../hooks/useMovies';
-import style from './MoviesPage.module.scss';
+import styles from './MoviesPage.module.scss';
 import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
 import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
 import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
@@ -30,13 +30,13 @@ export const MoviesPage = () => {
   });
 
   return (
-    <div className={style.wrapper}>
-      <div className={style.filterWrapper}>
+    <div className={styles.wrapper}>
+      <div className={styles.filterWrapper}>
         <MovieSearch />
         <MovieSort />
       </div>
 
-      <div className={style.container} ref={containerRef}>
+      <div className={styles.container} ref={containerRef}>
         <Spinner
           text={'Loading popular movies...'}
           loading={loading}
@@ -44,7 +44,11 @@ export const MoviesPage = () => {
         />
         {error && <ErrorCard message={error} onRetry={refetch} />}
         {!loading && !error && moviesToRender.length === 0 && (
-          <EmptyStateCard query={filters.debouncedQuery} />
+          <EmptyStateCard
+            title="No films found for"
+            subtitle="Try adjusting your keywords"
+            query={filters.debouncedQuery}
+          />
         )}
         {moviesToRender.map((movie) => (
           <MovieCard

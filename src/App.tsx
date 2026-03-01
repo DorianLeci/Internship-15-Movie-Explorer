@@ -6,33 +6,31 @@ import { MoviesPage } from './pages/Movies/MoviesPage';
 import { MovieProvider } from './context/MoviesContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { MovieDetailsPage } from './pages/MovieDetails/MovieDetailsPage';
+import { NotFoundPage } from './pages/NotFound/NotFoundPage';
+import { FavoriteMoviesPage } from './pages/FavoriteMovies/FavoriteMoviesPage';
 
 function App() {
   return (
     <MovieProvider>
-      <Layout>
-        <Routes>
-          <Route path={AppPaths.HOME} element={<HomePage />} />
+      <FavoritesProvider>
+        <Layout>
+          <Routes>
+            <Route path={AppPaths.HOME} element={<HomePage />} />
 
-          <Route
-            path={AppPaths.MOVIES}
-            element={
-              <FavoritesProvider>
-                <MoviesPage />
-              </FavoritesProvider>
-            }
-          />
+            <Route path={AppPaths.MOVIES} element={<MoviesPage />} />
 
-          <Route
-            path={AppPaths.MOVIE_DETAIL}
-            element={
-              <FavoritesProvider>
-                <MovieDetailsPage />
-              </FavoritesProvider>
-            }
-          />
-        </Routes>
-      </Layout>
+            <Route
+              path={AppPaths.MOVIE_DETAIL}
+              element={<MovieDetailsPage />}
+            />
+
+            <Route path={AppPaths.FAVORITES} element={<FavoriteMoviesPage />} />
+
+            <Route path={AppPaths.NOT_FOUND} element={<NotFoundPage />}></Route>
+            <Route path={AppPaths.NON_EXSTING} element={<NotFoundPage />} />
+          </Routes>
+        </Layout>
+      </FavoritesProvider>
     </MovieProvider>
   );
 }

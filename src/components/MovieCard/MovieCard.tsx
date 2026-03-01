@@ -15,7 +15,6 @@ export const MovieCard = ({ movie, onClick }: MovieCardProps) => {
   const { isFavorite } = useFavorites();
   const favorite = isFavorite(movie.id.toString());
 
-  console.log('Favorite: ', favorite);
   return (
     <div className={styles.card} onClick={onClick}>
       {favorite && <FaStar className={styles.starIcon} size={55} />}
