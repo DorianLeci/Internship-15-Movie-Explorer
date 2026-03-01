@@ -1,6 +1,6 @@
-@use '../../styles/variables.scss' as vars;
+@use './variables.scss' as vars;
 
-.crewContainer {
+.peopleContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,7 +18,7 @@
   color: vars.$color-peach;
 }
 
-.cardScrollContainer {
+.scrollContainer {
   padding: 0px 15px;
   overflow-x: scroll;
   overflow-y: visible;
@@ -61,7 +61,7 @@
   color: white;
 }
 
-.job {
+.role {
   display: block;
   margin-top: 5px;
   font-size: 14px;

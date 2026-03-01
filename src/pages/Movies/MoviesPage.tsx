@@ -9,6 +9,7 @@ import { MovieSearch } from '../../components/MovieSearch/MovieSearch';
 import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
 import { MovieSort } from '../../components/MovieSort/MovieSort';
 import { useNavigate } from 'react-router-dom';
+import { useSpinner } from '../../hooks/useSpinner';
 
 export const MoviesPage = () => {
   const navigate = useNavigate();
@@ -22,6 +23,8 @@ export const MoviesPage = () => {
   const error = activeState.error;
   const refetch = activeState.refetch;
   const loadMore = activeState.loadMore;
+
+  const showSpinner = useSpinner({ loading });
 
   useInfiniteScroll({
     containerRef,
@@ -37,11 +40,7 @@ export const MoviesPage = () => {
       </div>
 
       <div className={styles.container} ref={containerRef}>
-        <Spinner
-          text={'Loading popular movies...'}
-          loading={loading}
-          minDisplayTime={300}
-        />
+        {showSpinner && <Spinner text="Loading movies..." />}
         {error && <ErrorCard message={error} onRetry={refetch} />}
         {!loading && !error && moviesToRender.length === 0 && (
           <EmptyStateCard

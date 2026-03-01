@@ -12,6 +12,7 @@ import { MovieReviews } from '../../components/MovieReview/MovieReview';
 import { MovieTrailer } from '../../components/MovieTrailer/MovieTrailer';
 import { useEffect } from 'react';
 import { AppPaths } from '../../routes/paths';
+import { useSpinner } from '../../hooks/useSpinner';
 
 export const MovieDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -22,26 +23,22 @@ export const MovieDetailsPage = () => {
     api_key: API_KEY,
     append_to_response: 'credits,videos,reviews',
   };
-
   const url = `${BASE_URL}/movie/${id}?${new URLSearchParams(params)}`;
-
   const { data, loading, error } = useFetch<MovieDetails>(url);
 
+  const showSpinner = useSpinner({ loading });
+
   useEffect(() => {
-    if (error || !id) {
+    if (!id || error) {
       navigate(AppPaths.NOT_FOUND, { replace: true });
     }
-  }, [error, id]);
+  }, [error, id, navigate]);
 
   return (
     <div className={styles.container}>
-      <Spinner
-        text="Loading movie details..."
-        loading={loading}
-        minDisplayTime={300}
-      />
+      {showSpinner && <Spinner text="Loading movie details..." />}
 
-      {data ? (
+      {data && id ? (
         <>
           <section className={styles.action}>
             <button

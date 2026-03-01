@@ -1,26 +1,25 @@
 import { useNavigate } from 'react-router-dom';
-import { useFavoriteMovies } from '../../hooks/useFavoriteMovies';
 import { useFavorites } from '../../hooks/useFavorites';
 import { Spinner } from '../../components/Spinner/Spinner';
 import { ErrorCard } from '../../components/ErrorCard/ErrorCard';
 import { EmptyStateCard } from '../../components/EmptyStateCard/EmptyStateCard';
 import { MovieCard } from '../../components/MovieCard/MovieCard';
 import styles from './FavoriteMoviesPage.module.scss';
+import { useSpinner } from '../../hooks/useSpinner';
 
 export const FavoriteMoviesPage = () => {
   const navigate = useNavigate();
   const { favoriteMovies, loading, error, refetch } = useFavorites();
+  const showSpinner = useSpinner({ loading });
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <Spinner
-          text="Loading favorite movies..."
-          loading={loading}
-          minDisplayTime={300}
-        />
-        {error && <ErrorCard message={error} onRetry={refetch} />}
-        {!loading &&
+        {showSpinner && <Spinner text="Loading favorite movies..." />}
+        {!showSpinner && error && (
+          <ErrorCard message={error} onRetry={refetch} />
+        )}
+        {!showSpinner &&
           !error &&
           (!favoriteMovies || favoriteMovies.length === 0) && (
             <EmptyStateCard
