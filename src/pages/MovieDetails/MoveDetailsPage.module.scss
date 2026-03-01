@@ -137,6 +137,8 @@
         transform 0.2s ease,
         background-color 0.2s ease;
 
+      will-change: transform;
+
       &:hover {
         background-color: rgba(255, 255, 255, 0.4);
         transform: translateY(-2px);

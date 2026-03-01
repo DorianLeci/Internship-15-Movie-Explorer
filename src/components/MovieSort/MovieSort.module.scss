@@ -19,14 +19,15 @@
     color: white;
     font-size: 20px;
     cursor: pointer;
+    transition: box-shadow 0.3s ease;
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
 
-    &:focus {
-      outline: 2px solid vars.$color-peach;
+    &:hover {
+      box-shadow: 0 6px 2px vars.$color-peach;
     }
 
     option {
@@ -54,6 +55,6 @@
   }
 
   &:hover {
-    box-shadow: 0 px 2px vars.$color-peach;
+    box-shadow: 0 6px 2px vars.$color-peach;
   }
 }

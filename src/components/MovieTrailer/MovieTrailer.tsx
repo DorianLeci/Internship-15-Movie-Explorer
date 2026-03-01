@@ -16,14 +16,17 @@ export const MovieTrailer = ({ videos }: MovieTrailerProps) => {
 
   return (
     <section className={styles.video}>
-      <h2>Trailer</h2>
-      <iframe
-        width="560"
-        height="315"
-        src={`https://www.youtube.com/embed/${trailer.key}`}
-        title={trailer.name}
-        allowFullScreen
-      />
+      <div className={styles.videoContainer}>
+        <h2 className={styles.title}>Trailer</h2>
+        <iframe
+          className={styles.videoFrame}
+          width="560"
+          height="315"
+          src={`https://www.youtube.com/embed/${trailer.key}`}
+          title={trailer.name}
+          allowFullScreen
+        />
+      </div>
     </section>
   );
 };
