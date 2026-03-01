@@ -1,4 +1,4 @@
-import type { Movie, MoviesResponse } from '../types/MovieResponse';
+import type { MoviesResponse } from '../types/MovieResponse';
 
 interface FilterOptions {
   data: MoviesResponse | null;
@@ -15,7 +15,7 @@ export function filterSearchResults({
 }: FilterOptions): MoviesResponse | null {
   if (!data || !data.results) return null;
 
-  const filteredResults: Movie[] = data.results
+  const filteredResults = data.results
     .filter(
       (m) => m.vote_count >= minVoteCount && m.vote_average >= minVoteAverage,
     )

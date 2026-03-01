@@ -1,7 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { MoviesState } from '../types/MovieContextType';
 import type { MoviesResponse } from '../types/MovieResponse';
-import { useFetchedData } from './useFetchedData';
 import { filterSearchResults } from '../helpers/FilterSearch';
 import { useFetchAllPages } from './useFetchAllPages';
 import { API_KEY, BASE_URL } from '../api/config';
@@ -40,23 +39,31 @@ export function useSearchMovies({
   });
 
   useEffect(() => {
-    if (!query) setSearchState(browseState);
-    else setSearchState(initialState);
-  }, [query, browseState]);
+    if (!data) return;
 
-  const filteredData = useMemo(() => {
-    if (!data) return null;
     const allMovies = data.flatMap((page) => page.results);
 
-    return filterSearchResults({
+    const filtered = filterSearchResults({
       data: { results: allMovies, refetch, total_pages: 1 },
       minVoteCount,
       minVoteAverage,
       topResultsCount,
     });
-  }, [data, minVoteCount, minVoteAverage, topResultsCount]);
 
-  useFetchedData({ data: filteredData, callback: setSearchState });
+    setSearchState((prev) => {
+      const same =
+        prev.movies.length === filtered?.results.length &&
+        prev.movies.every((m, i) => m.id === filtered.results[i].id);
+
+      if (same) return prev;
+
+      return {
+        movies: filtered?.results ?? [],
+        page: 1,
+        totalPageNum: 1,
+      };
+    });
+  }, [data, minVoteCount, minVoteAverage, topResultsCount, refetch]);
 
   return {
     moviesState: searchState,

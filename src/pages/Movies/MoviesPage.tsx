@@ -44,13 +44,16 @@ export const MoviesPage = () => {
         {!showSpinner && error && (
           <ErrorCard message={error} onRetry={refetch} />
         )}
-        {!showSpinner && !error && moviesToRender.length === 0 && (
-          <EmptyStateCard
-            title="No films found for"
-            subtitle="Try adjusting your keywords"
-            query={filters.debouncedQuery}
-          />
-        )}
+        {filters.debouncedQuery !== '' &&
+          !showSpinner &&
+          !error &&
+          moviesToRender.length === 0 && (
+            <EmptyStateCard
+              title="No films found for"
+              subtitle="Try adjusting your keywords"
+              query={filters.debouncedQuery}
+            />
+          )}
         {moviesToRender.map((movie) => (
           <MovieCard
             key={movie.id}
