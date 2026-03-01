@@ -39,7 +39,11 @@ export function useSearchMovies({
   });
 
   useEffect(() => {
-    if (!data) return;
+    if (!query) setSearchState(browseState);
+  }, [query, browseState]);
+
+  useEffect(() => {
+    if (!data || query === '') return;
 
     const allMovies = data.flatMap((page) => page.results);
 
