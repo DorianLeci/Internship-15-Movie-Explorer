@@ -9,7 +9,7 @@ interface FetchState<T> {
 
 export function useFetch<T>(url: string): FetchState<T> {
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [reload, setReload] = useState(0);
 

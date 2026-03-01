@@ -1,0 +1,59 @@
+@use '../../styles/variables.scss' as vars;
+
+.sortWrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.selectLabel {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: white;
+
+  select {
+    padding: 6px 10px;
+    border: none;
+    background: vars.$bg-dark-opaque;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:focus {
+      outline: 2px solid vars.$color-peach;
+    }
+
+    option {
+      background: red;
+      color: white;
+    }
+  }
+}
+
+.directionButton {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding: 6px 10px;
+  border: none;
+  background: vars.$bg-dark-opaque;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    box-shadow: 0 px 2px vars.$color-peach;
+  }
+}

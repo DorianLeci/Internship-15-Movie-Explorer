@@ -1,24 +1,22 @@
+import type { CastMember } from './CastMember';
+import type { CrewMember } from './CrewMember';
 import type { Movie } from './Movie';
+import type { MovieReview } from './MovieReview';
+import type { MovieVideo } from './MovieVideo';
 
 export interface MovieDetails extends Movie {
   runtime: number;
   overview: string;
-  genres: { name: string }[];
+  genres: { id: number; name: string }[];
 
   credits?: {
-    cast: { id: number; name: string; character: string }[];
-    crew: { id: number; name: string; job: string }[];
+    cast: CastMember[];
+    crew: CrewMember[];
   };
 
-  reviews?: { results: { id: string; author: string; content: string }[] };
+  reviews?: { results: MovieReview[] };
 
   videos?: {
-    results: {
-      id: string;
-      key: string;
-      name: string;
-      site: string;
-      type: string;
-    }[];
+    results: MovieVideo[];
   };
 }

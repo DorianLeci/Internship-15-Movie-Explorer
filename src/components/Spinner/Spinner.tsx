@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from './Spinner.module.scss';
+import { createPortal } from 'react-dom';
 
 interface SpinnerProps {
   loading: boolean;
@@ -21,10 +22,11 @@ export const Spinner = ({ loading, text, minDisplayTime }: SpinnerProps) => {
 
   if (!show) return null;
 
-  return (
+  return createPortal(
     <div className={style.container}>
       <div className={style.spinner}></div>
       <span className={style.loadingText}>{text}</span>
-    </div>
+    </div>,
+    document.body,
   );
 };

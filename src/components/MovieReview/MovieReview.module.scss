@@ -1,0 +1,66 @@
+@use '../../styles/variables.scss' as vars;
+
+.reviewContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0px 0px;
+  box-shadow: 0px 2px 10px vars.$color-peach;
+  border-radius: 30px;
+  background: vars.$bg-dark;
+}
+
+.title {
+  font-size: 28px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: vars.$color-peach;
+}
+
+.cardScrollContainer {
+  padding: 0px 15px;
+  overflow-x: scroll;
+  overflow-y: visible;
+  scroll-behavior: smooth;
+}
+
+.cardContainer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+  margin: 30px 0;
+}
+
+.card {
+  flex: 0 0 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  height: fit-content;
+  padding: 15px 20px;
+  border-radius: 20px;
+  background: vars.$bg-dark-opaque;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: vars.$card-hover-glow;
+  }
+}
+
+.author {
+  font-size: 22px;
+  font-weight: 600;
+  color: white;
+}
+
+.content {
+  text-align: start;
+}

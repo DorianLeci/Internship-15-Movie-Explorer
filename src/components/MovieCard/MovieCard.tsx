@@ -1,6 +1,8 @@
 import styles from './MovieCard.module.scss';
-import type { Movie } from '../../types/MovieResponse';
 import defaultPoster from '../../assets/images/default-poster.png';
+import type { Movie } from '../../types/Movie';
+import { useFavorites } from '../../hooks/useFavorites';
+import { FaStar } from 'react-icons/fa';
 
 interface MovieCardProps {
   movie: Movie;
@@ -10,8 +12,13 @@ interface MovieCardProps {
 const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p/w500';
 
 export const MovieCard = ({ movie, onClick }: MovieCardProps) => {
+  const { isFavorite } = useFavorites();
+  const favorite = isFavorite(movie.id.toString());
+
+  console.log('Favorite: ', favorite);
   return (
     <div className={styles.card} onClick={onClick}>
+      {favorite && <FaStar className={styles.starIcon} size={55} />}
       <div className={styles.favoriteBtn}></div>
       <h1 className={styles.title}>{movie.title}</h1>
       <img

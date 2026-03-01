@@ -21,5 +21,10 @@ $card-bg: linear-gradient(
 );
 
 $text-shadow-black: 4px 0px 4px black;
+$text-shadow-peach: 4px 0px 8px rgba(255, 179, 179, 0.5);
+
 $card-shadow: 8px 8px 3px rgba(255, 179, 179, 0.5);
 $card-hover-shadow: 8px 8px 3px rgba(255, 179, 179, 0.7);
+$card-hover-glow: 0 0 18px #ffb3b3;
+
+$bg-dark-opaque: rgba(255, 255, 255, 0.1);
