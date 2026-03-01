@@ -1,5 +1,5 @@
 import styles from './MovieCard.module.scss';
-import defaultPoster from '../../assets/images/default-poster.png';
+import defaultPoster from '../../assets/images/default-poster.svg';
 import type { Movie } from '../../types/Movie';
 import { useFavorites } from '../../hooks/useFavorites';
 import { FaStar } from 'react-icons/fa';

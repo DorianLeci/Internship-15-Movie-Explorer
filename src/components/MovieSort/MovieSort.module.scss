@@ -17,6 +17,7 @@
     border: none;
     background: vars.$bg-dark-opaque;
     color: white;
+    font-weight: bold;
     font-size: 20px;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
@@ -43,7 +44,7 @@
     z-index: 100;
     visibility: hidden;
     width: 100%;
-    background-color: vars.$bg-dark-opaque;
+    background: vars.$bg-dark;
     border: 1px solid vars.$color-peach;
     border-radius: 6px;
     margin-top: 4px;

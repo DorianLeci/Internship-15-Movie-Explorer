@@ -1,6 +1,5 @@
 export enum MovieSortBy {
   POPULARITY = 'popularity',
-  TITLE = 'title',
-  RELEASE_DATE = 'release_date',
+  RELEASE_DATE = 'primary_release_date',
   RATING = 'vote_average',
 }

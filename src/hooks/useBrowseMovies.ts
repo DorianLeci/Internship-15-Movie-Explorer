@@ -24,7 +24,7 @@ export function useBrowseMovies({ sortBy, sortDirection }: UseBrowseOptions) {
   const canLoad = browseState.page <= browseState.totalPageNum;
 
   const { data, loading, error, refetch } = usePaginatedFetch<MoviesResponse>({
-    url: `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortBy}.${sortDirection}&page=${browseState.page}&vote_count.gte=10000&vote_average.gte=5`,
+    url: `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortBy}.${sortDirection}&page=${browseState.page}&vote_count.gte=1000&vote_average.gte=5`,
     skip: !canLoad,
   });
 
@@ -34,6 +34,7 @@ export function useBrowseMovies({ sortBy, sortDirection }: UseBrowseOptions) {
 
   useFetchedData({ data, callback: setBrowseState });
 
+  console.log(data);
   return {
     moviesState: browseState,
     loading,
