@@ -6,7 +6,7 @@
 ## Features
 - Browse popular movies with pagination
 
-- Search for movies with filters (vote count, vote average)
+- Search for movies with filters (release date, rating, popularity)
 
 - View movie details: cast, crew, trailers, reviews
 
