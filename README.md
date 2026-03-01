@@ -35,13 +35,28 @@ cd Internship-15-Movie-Explorer
 npm install
 ```
 
-4. Run app:
-```
-npm run dev
-```
+## Environment Variables
 
-5. Type application url into website (by default it should be following):
-```
-http://localhost:5173/
-```
+1. Copy the example environment file:
+   ```
+   cp .env.example .env
+   ```
+
+2. Open .env and add your TMDB key: VITE_TMDB_API_KEY=YOUR_KEY_HERE
+
+3. If you don’t have a key yet, you can create a free account and generate one here: https://developer.themoviedb.org/docs/getting-started
+
+## Final
+
+1. Run the app:
+   ```
+   npm run dev
+   ```
+2. Open the browser and visit: http://localhost:5173/ (by default) or click on the link from your terminal
+
+
+
+
+
+
 
