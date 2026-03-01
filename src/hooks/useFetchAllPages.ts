@@ -1,21 +1,15 @@
 import { useState, useEffect } from 'react';
+import type { FetchState } from '../types/FetchState';
 
 interface UseFetchAllPagesOptions {
   url: string;
   maxPagesToFetch?: number;
 }
 
-interface FetchState<T> {
-  data: T[] | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => void;
-}
-
 export function useFetchAllPages<T>({
   url,
   maxPagesToFetch = 20,
-}: UseFetchAllPagesOptions): FetchState<T> {
+}: UseFetchAllPagesOptions): FetchState<T[]> {
   const [data, setData] = useState<T[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

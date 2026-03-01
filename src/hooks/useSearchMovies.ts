@@ -29,8 +29,14 @@ export function useSearchMovies({
 }: UseSearchOptions) {
   const [searchState, setSearchState] = useState<MoviesState>(initialState);
 
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    query,
+    include_adult: 'false',
+  });
+
   const { data, loading, error, refetch } = useFetchAllPages<MoviesResponse>({
-    url: `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&include_adult=false`,
+    url: `${BASE_URL}/search/movie?${params}`,
   });
 
   useEffect(() => {
@@ -48,7 +54,7 @@ export function useSearchMovies({
       minVoteAverage,
       topResultsCount,
     });
-  }, [data]);
+  }, [data, minVoteCount, minVoteAverage, topResultsCount]);
 
   useFetchedData({ data: filteredData, callback: setSearchState });
 

@@ -16,15 +16,30 @@ const initialState: MoviesState = {
 interface UseBrowseOptions {
   sortBy: MovieSortBy;
   sortDirection: MovieSortDirection;
+  minVoteCount?: number;
+  minVoteAverage?: number;
 }
 
-export function useBrowseMovies({ sortBy, sortDirection }: UseBrowseOptions) {
+export function useBrowseMovies({
+  sortBy,
+  sortDirection,
+  minVoteCount = 1000,
+  minVoteAverage = 5,
+}: UseBrowseOptions) {
   const [browseState, setBrowseState] = useState<MoviesState>(initialState);
 
   const canLoad = browseState.page <= browseState.totalPageNum;
 
+  const params = new URLSearchParams({
+    api_key: API_KEY,
+    sort_by: `${sortBy}.${sortDirection}`,
+    page: String(browseState.page),
+    'vote_count.gte': String(minVoteCount),
+    'vote_average.gte': String(minVoteAverage),
+  });
+
   const { data, loading, error, refetch } = usePaginatedFetch<MoviesResponse>({
-    url: `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sortBy}.${sortDirection}&page=${browseState.page}&vote_count.gte=1000&vote_average.gte=5`,
+    url: `${BASE_URL}/discover/movie?${params}`,
     skip: !canLoad,
   });
 

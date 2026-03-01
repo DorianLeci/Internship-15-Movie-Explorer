@@ -41,8 +41,10 @@ export const MoviesPage = () => {
 
       <div className={styles.container} ref={containerRef}>
         {showSpinner && <Spinner text="Loading movies..." />}
-        {error && <ErrorCard message={error} onRetry={refetch} />}
-        {!loading && !error && moviesToRender.length === 0 && (
+        {!showSpinner && error && (
+          <ErrorCard message={error} onRetry={refetch} />
+        )}
+        {!showSpinner && !error && moviesToRender.length === 0 && (
           <EmptyStateCard
             title="No films found for"
             subtitle="Try adjusting your keywords"

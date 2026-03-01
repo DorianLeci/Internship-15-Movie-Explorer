@@ -41,10 +41,7 @@ export const MovieDetailsPage = () => {
       {data && id ? (
         <>
           <section className={styles.action}>
-            <button
-              className={styles.backButton}
-              onClick={() => window.history.back()}
-            >
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
               <FaArrowLeft size={40} />
             </button>
 

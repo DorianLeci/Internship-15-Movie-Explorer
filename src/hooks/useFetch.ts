@@ -1,11 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-
-interface FetchState<T> {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => void;
-}
+import { useState, useEffect } from 'react';
+import type { FetchState } from '../types/FetchState';
 
 export function useFetch<T>(url: string): FetchState<T> {
   const [data, setData] = useState<T | null>(null);
@@ -22,7 +16,7 @@ export function useFetch<T>(url: string): FetchState<T> {
       try {
         setLoading(true);
         setError(null);
-        // await new Promise((resolve) => setTimeout(resolve, 200));
+
         const response = await fetch(url, { signal: controller.signal });
 
         if (!response.ok)
