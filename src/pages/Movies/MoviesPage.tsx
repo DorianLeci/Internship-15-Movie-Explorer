@@ -47,7 +47,6 @@ export const MoviesPage = () => {
         {filters.debouncedQuery !== '' &&
           !showSpinner &&
           !error &&
-          !(activeState === search) &&
           moviesToRender.length === 0 && (
             <EmptyStateCard
               title="No films found for"
