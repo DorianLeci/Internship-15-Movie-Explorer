@@ -14,7 +14,7 @@ export const EmptyStateCard = ({
 }: EmptyStateCardProps) => {
   return (
     <div className={styles.wrapper}>
-      <TbMovieOff className={styles.icon} />
+      <TbMovieOff className={styles.icon} color="aqua" />
       <h2 className={styles.title}>
         {title}
         {query && <span>"{query}"</span>}

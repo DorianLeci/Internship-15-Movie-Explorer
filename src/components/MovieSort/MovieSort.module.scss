@@ -6,13 +6,13 @@
   gap: 10px;
 }
 
-.selectLabel {
+.selectOption {
+  position: relative;
   display: flex;
   flex-direction: column;
-  font-size: 14px;
-  color: white;
+  width: 200px;
 
-  select {
+  .inputLike {
     padding: 6px 10px;
     border: none;
     background: vars.$bg-dark-opaque;
@@ -21,18 +21,51 @@
     cursor: pointer;
     transition: box-shadow 0.3s ease;
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
     &:hover {
       box-shadow: 0 6px 2px vars.$color-peach;
     }
 
-    option {
-      background: red;
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 6px 2px vars.$color-peach;
+    }
+  }
+
+  .options {
+    position: absolute;
+    top: 130%;
+    left: 0;
+    z-index: 100;
+    visibility: hidden;
+    width: 100%;
+    background-color: vars.$bg-dark-opaque;
+    border: 1px solid vars.$color-peach;
+    border-radius: 6px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+
+    &.active {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(5%);
+    }
+
+    li {
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 18px;
       color: white;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: vars.$color-peach;
+      }
     }
   }
 }

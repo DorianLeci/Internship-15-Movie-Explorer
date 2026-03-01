@@ -34,7 +34,7 @@ export function useFavoriteMovies({ ids }: useFavMoviesOptions) {
               signal: controller.signal,
             },
           );
-          if (!res.ok) throw new Error(`Failed to fetch ${id}`);
+          if (!res.ok) throw new Error(`Failed to fetch movie with id: ${id}`);
           return await res.json();
         });
 
