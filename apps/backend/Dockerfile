@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+COPY prisma ./prisma/
+
+RUN npm install
+
+COPY . .
+
+RUN chown -R node:node /app
+
+USER node
+
+EXPOSE 3000
+
+CMD ["npm","run","dev"]

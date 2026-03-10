@@ -1,0 +1,53 @@
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+
+  backend:
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+
+    environment:
+      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/Movies?schema=public'
+
+    volumes:
+      - ./apps/backend:/app
+      - /app/node_modules
+
+    ports:
+      - '3000:3000'
+
+    depends_on:
+      - db
+
+    networks:
+      - backend_network
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: Movies
+
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_data:/var/lib/postgressql/data
+
+    networks:
+      - backend_network
+
+volumes:
+  db_data:
+
+networks:
+  backend_network:
+    driver: bridge
