@@ -29,8 +29,9 @@ git clone git@github.com:DorianLeci/Internship-15-Movie-Explorer.git
 ```
 cd Internship-15-Movie-Explorer
 ```
+3. Switch to the `user_model` branch (this branch is not yet merged into main):
 
-3. Install dependencies:
+4. Install dependencies:
 ```
 npm install
 ```
